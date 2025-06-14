@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Profile – Blex{% endblock %}
+{% block content %}
+  <div class="container">
+    <h2>{{ profile.name }} (@{{ profile.account.username }})</h2>
+    <p class="lead">{{ profile.bio or "No bio yet." }}</p>
+
+    {% if current.account.username != profile.account.username %}
+      <p>
+        {% if is_following %}
+          You are following {{ profile.name }}. 
+          <a href="{{ url_for('unfollow', username=profile.account.username) }}">Unfollow</a>
+        {% else %}
+          <a href="{{ url_for('follow', username=profile.account.username) }}">Follow</a>
+          {{ profile.name }}
+        {% endif %}
+      </p>
+    {% endif %}
+
+    <hr>
+
+    <h4>Followers ({{ profile.followers|length }})</h4>
+    <ul class="mb-md">
+      {% for u in profile.followers %}
+        <li>
+          <a href="{{ url_for('profile', username=u.account.username) }}">
+            {{ u.name }} (@{{ u.account.username }})
+          </a>
+        </li>
+      {% else %}
+        <li class="text-muted">No followers yet.</li>
+      {% endfor %}
+    </ul>
+
+    <h4>Following ({{ profile.following|length }})</h4>
+    <ul class="mb-md">
+      {% for uname in profile.following %}
+        {% set u = find_user(users, uname) %}
+        <li>
+          <a href="{{ url_for('profile', username=uname) }}">
+            {{ u.name if u else uname }} (@{{ uname }})
+          </a>
+        </li>
+      {% else %}
+        <li class="text-muted">Not following anyone.</li>
+      {% endfor %}
+    </ul>
+
+    <p><a href="{{ url_for('dashboard') }}">← Back to Home</a></p>
+  </div>
+{% endblock %}

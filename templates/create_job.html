@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}New Job Post{% endblock %}
+{% block content %}
+  <h2>Create Job Post</h2>
+  <form method="post" enctype="multipart/form-data">
+    <input name="title" placeholder="Job Title" required><br>
+    <input name="company" placeholder="Company" required><br>
+    <textarea name="requirements" placeholder="Requirements" required></textarea><br>
+
+    <!-- matches request.files.get('media') -->
+    <label>Image (optional):</label><br>
+    <input type="file" name="media" accept="image/*"><br><br>
+
+    <button type="submit">Post Job</button>
+  </form>
+  <p><a href="{{ url_for('jobs_list') }}">← Back to Job Board</a></p>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- templates/search_users.html -->
+{% extends "base.html" %}
+{% block title %}Find Users – Blex{% endblock %}
+{% block content %}
+  <div class="container">
+    <h2>Find Users</h2>
+    <form class="mb-sm d-flex" method="get" action="{{ url_for('search_users') }}">
+      <input
+        type="text"
+        name="q"
+        value="{{ query }}"
+        class="form-control me-sm"
+        placeholder="Search by name…"
+      >
+      <button class="btn btn-outline" type="submit">Search</button>
+    </form>
+
+    {% if matched %}
+      <div class="job-grid"><!-- reuse grid styling -->
+        {% for u in matched %}
+          <div class="job-card p-sm d-flex align-items-center justify-content-between">
+            <div>
+              <strong>{{ u.name }}</strong><br>
+              <small class="text-muted">@{{ u.account.username }}</small>
+            </div>
+            {% if u.account.username in user.following %}
+              <form method="post" action="{{ url_for('unfollow', username=u.account.username) }}">
+                <button class="btn btn-outline">Unfollow</button>
+              </form>
+            {% else %}
+              <form method="post" action="{{ url_for('follow', username=u.account.username) }}">
+                <button class="btn btn-primary">Follow</button>
+              </form>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-center text-muted">No users found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

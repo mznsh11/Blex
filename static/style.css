@@ -1,0 +1,425 @@
+/*========================================
+=            Theme Variables             =
+========================================*/
+:root {
+    /* Typography */
+    --font-sans: 'Roboto', sans-serif;
+    --font-serif: 'Merriweather', serif;
+    --font-size-base: 16px;
+    --font-size-sm: 0.875rem;
+    --font-size-lg: 1.125rem;
+  
+    /* Colors */
+    --color-bg: #f2f4f2;
+    --color-card-bg: rgba(255,255,255,0.85);
+    --color-primary: #6c757d;
+    --color-primary-hover: #5a6268;
+    --color-secondary: #adb5bd;
+    --color-accent: #cbeae4;
+    --color-blue: #5bc0de;
+    --color-blue-hover: #31b0d5;
+    --color-text: #343a40;
+    --color-text-light: #6c757d;
+    --color-border: rgba(52,58,64,0.1);
+  
+    /* Success / Danger */
+    --color-success-bg: #d4edda;
+    --color-success-text: #155724;
+    --color-danger-bg: #f8d7da;
+    --color-danger-text: #721c24;
+  
+    /* Spacing */
+    --spacing-xxs: 0.25rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+  
+    /* Borders & Shadows */
+    --border-radius: 0.75rem;
+    --shadow-sm: 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.1);
+  
+    /* Transitions & Animations */
+    --transition: 0.4s ease;
+    --ease-out: cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-bg) 100%);
+    --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-blue) 100%);
+  }
+  
+  /*========================================
+  =            Global Reset               =
+  ========================================*/
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background: var(--gradient-primary);
+    background-size: 200% 200%;
+    animation: bg-pan 30s var(--ease-out) infinite;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  audio, canvas, iframe, svg {
+    vertical-align: middle;
+  }
+  
+  /*========================================
+  =       Background Animation Keyframes  =
+  ========================================*/
+  @keyframes bg-pan {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /*========================================
+  =            Container Helper           =
+  ========================================*/
+  .container {
+    width: min(90%, 1200px);
+    margin: 0 auto;
+    padding: var(--spacing-lg) 0;
+  }
+  
+  /*========================================
+  =            Typography                 =
+  ========================================*/
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-primary);
+    transition: color var(--transition);
+  }
+  
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.75rem; }
+  h4 { font-size: 1.5rem; }
+  h5 { font-size: 1.25rem; }
+  h6 { font-size: var(--font-size-sm); }
+  
+  p {
+    margin-bottom: var(--spacing-md);
+    opacity: 0;
+    animation: fadeInUp 0.8s forwards;
+    animation-delay: 0.3s;
+  }
+  
+  ul, ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-md);
+  }
+  
+  blockquote {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(255,255,255,0.6);
+    border-left: 4px solid var(--color-secondary);
+    backdrop-filter: blur(5px);
+  }
+  
+  code {
+    background: rgba(0,0,0,0.05);
+    padding: var(--spacing-xxs) var(--spacing-xs);
+    border-radius: var(--border-radius);
+    font-family: monospace;
+    font-size: var(--font-size-sm);
+  }
+  
+  /*========================================
+  =       Text Animation Keyframes        =
+  ========================================*/
+  @keyframes fadeInUp {
+    0%   { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  /*========================================
+  =            Header & Logo              =
+  ========================================*/
+  header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: var(--color-card-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+  }
+  
+  .logo {
+    height: 48px;
+    color: var(--color-primary);
+    transition: transform var(--transition);
+  }
+  
+  .logo:hover {
+    transform: rotate(-5deg) scale(1.05);
+  }
+  
+/*========================================
+=            Auth Forms                 =
+========================================*/
+.auth-container {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+  }
+  
+  .auth-card {
+    position: relative;           /* allow absolute children */
+    padding-top: 3rem;            /* room for the centered icon */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--color-card-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  .auth-card i.fa-bolt {
+    position: absolute;
+    top: 1rem;                    /* distance from top of card */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: var(--color-blue);
+  }
+  
+  /*========================================
+  =            Links                      =
+  ========================================*/
+  a {
+    color: var(--color-blue);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+  
+  a:hover {
+    color: var(--color-blue-hover);
+  }
+  
+  /*========================================
+  =            Shelf / Nav                =
+  ========================================*/
+  nav.shelf {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  nav.shelf a {
+    color: var(--color-text);
+    padding: var(--spacing-xxs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+    transition: color var(--transition);
+  }
+  
+  nav.shelf a::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--gradient-accent);
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+  }
+  
+  nav.shelf a:hover::before {
+    transform: translateX(0);
+  }
+  
+  nav.shelf a:hover {
+    color: #fff;
+  }
+  
+  nav.shelf .sep {
+    width: 1px;
+    height: 1em;
+    background: var(--color-border);
+  }
+  
+  /*========================================
+  =            Grid Layouts               =
+  ========================================*/
+  .post-grid, .product-grid, .job-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /*========================================
+  =            Card Components            =
+  ========================================*/
+  .post-card, .item-card, .job-card {
+    background: var(--color-card-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+    backdrop-filter: blur(5px);
+  }
+  
+  .post-card:hover, .item-card:hover, .job-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .post-card img, .item-card img, .job-card img {
+    width: 100%;
+    display: block;
+    transition: transform var(--transition);
+  }
+  
+  .post-card:hover img, .item-card:hover img, .job-card:hover img {
+    transform: scale(1.04);
+  }
+  
+  .post-card .card-body, .item-card .card-body, .job-card .card-body {
+    padding: var(--spacing-sm) var(--spacing-md);
+    animation: fadeInUp 0.6s forwards;
+  }
+  
+  /*========================================
+  =            Avatar Styling             =
+  ========================================*/
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-card-bg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition);
+  }
+  
+  .avatar:hover {
+    transform: scale(1.1);
+  }
+  
+  /*========================================
+  =            Buttons                    =
+  ========================================*/
+  .btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+  }
+  
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: #fff;
+    background-size: 200% 200%;
+    animation: bg-pan 8s var(--ease-out) infinite;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--color-blue);
+    color: var(--color-blue);
+  }
+  
+  .btn-outline:hover:not(:disabled) {
+    background: var(--color-blue);
+    color: #fff;
+  }
+  
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /*========================================
+  =            Auth Forms Continued       =
+  ========================================*/
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+  }
+  
+  input, textarea, select {
+    width: 100%;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+    transition: border var(--transition), box-shadow var(--transition);
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 3px rgba(91,192,222,0.3);
+  }
+  
+  .form-error {
+    margin-top: var(--spacing-xxs);
+    color: var(--color-danger-text);
+    font-size: var(--font-size-sm);
+  }
+  
+  /*========================================
+  =            Tables                     =
+  ========================================*/
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /*========================================
+  =            Text Selection             =
+  ========================================*/
+  ::selection {
+    background: var(--color-blue);
+    color: #fff;
+  }
+  

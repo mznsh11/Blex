@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Register – Blex{% endblock %}
+{% block content %}
+  <div class="auth-container">
+    <div class="text-center mb-4">
+      <i class="fas fa-bolt fa-3x text-primary"></i>
+      <h2 class="mt-2">Join Blex</h2>
+    </div>
+    <div class="card auth-card">
+      <h4 class="text-center mb-4">Register</h4>
+      <form method="post">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input name="name" id="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input name="username" id="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select name="role" id="role" class="form-control" required>
+            <option value="regular">Regular User</option>
+            <option value="professional">Professional</option>
+          </select>
+        </div>
+        <div class="text-center mt-md">
+          <button type="submit" class="btn btn-success">Register</button>
+        </div>
+      </form>
+      <p class="text-center mt-md">
+        Already have an account? <a href="{{ url_for('login') }}">Log in</a>.
+      </p>
+    </div>
+  </div>
+{% endblock %}

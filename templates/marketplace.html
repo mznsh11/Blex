@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Marketplace – Blex{% endblock %}
+{% block content %}
+  <p class="lead">
+    Explore our <a href="{{ url_for('marketplace_list') }}">marketplace</a>,
+    or <a href="{{ url_for('create_market_item') }}">add a new listing</a>.
+  </p>
+  <form method="get" class="mb-sm" action="{{ url_for('marketplace_list') }}">
+    <div class="input-group">
+      <input type="text" name="q" value="{{ search_query }}"
+             class="form-control" placeholder="Search listings…">
+      <button class="btn btn-outline">Search</button>
+    </div>
+  </form>
+  <div class="product-grid">
+    {% for item in items %}
+      <div class="item-card h-100">
+        {% if item.media.url %}
+          <img src="{{ item.media.url }}" alt="{{ item.product_name }}">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5>{{ item.product_name }}</h5>
+          <p>{{ item.description }}</p>
+          <p class="fw-bold mb-sm">$ {{ item.price }}</p>
+          <small class="text-muted">
+            Posted by {{ item.author.name }} on {{ item.timestamp }}
+          </small>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center text-muted">
+        No listings found. <a href="{{ url_for('create_market_item') }}">Create one now.</a>
+      </p>
+    {% endfor %}
+  </div>
+{% endblock %}

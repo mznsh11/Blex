@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Jobs – Blex{% endblock %}
+{% block content %}
+  <p class="lead">
+    Browse our <a href="{{ url_for('jobs_list') }}">job board</a>,
+    {% if user.account.role == 'professional' %}
+      or <a href="{{ url_for('create_job') }}">post a job</a>.
+    {% endif %}
+  </p>
+  <form method="get" class="mb-sm" action="{{ url_for('jobs_list') }}">
+    <div class="input-group">
+      <input type="text" name="q" value="{{ search_query }}"
+             class="form-control" placeholder="Search jobs…">
+      <button class="btn btn-outline">Search</button>
+    </div>
+  </form>
+  <div class="job-grid">
+    {% for job in jobs %}
+      <div class="job-card">
+        <div class="card-body">
+          <h5>{{ job.job_title }} @ {{ job.company }}</h5>
+          <p>{{ job.requirements }}</p>
+          <small class="text-muted">
+            Posted by {{ job.author.name }} on {{ job.timestamp }}
+          </small>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center text-muted">
+        No jobs available.
+        {% if user.account.role == 'professional' %}
+          <a href="{{ url_for('create_job') }}">Post the first job.</a>
+        {% endif %}
+      </p>
+    {% endfor %}
+  </div>
+{% endblock %}

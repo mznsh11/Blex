@@ -1,0 +1,64 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+{% block title %}Home – Blex{% endblock %}
+{% block content %}
+  <p>
+    Want to share an update?
+    <a href="{{ url_for('create_post') }}">Create a post</a>.
+  </p>
+  <div class="post-grid">
+    {% for post in posts|reverse %}
+      <div class="post-card">
+        <div class="card-body d-flex flex-column">
+          <!-- Author & timestamp -->
+          <div class="d-flex align-items-center mb-sm">
+            <img src="{{ url_for('static', filename='avatar.png') }}"
+                 class="avatar me-sm" alt="Avatar">
+            <div>
+              <strong>{{ post.author.name }}</strong><br>
+              <small class="text-muted">{{ post.timestamp }}</small>
+            </div>
+          </div>
+          <!-- Caption -->
+          <p>{{ post.caption }}</p>
+          <!-- Media -->
+          {% if post.media.url %}
+            {% if post.media.media_type=='image' %}
+              <img src="{{ post.media.url }}" class="rounded mb-sm">
+            {% else %}
+              <video src="{{ post.media.url }}" controls class="w-100 rounded mb-sm"></video>
+            {% endif %}
+          {% endif %}
+          <!-- Like & Comment buttons -->
+          <div class="d-flex justify-content-between align-items-center mt-md">
+            <form method="post" action="{{ url_for('like_post', post_id=post.post_id) }}">
+              <button type="submit" class="btn btn-outline">
+                👍 Like ({{ post.likes }})
+              </button>
+            </form>
+            <form method="post"
+                  action="{{ url_for('comment_post', post_id=post.post_id) }}"
+                  class="d-flex align-items-center">
+              <input name="comment" class="form-control form-control-sm me-sm"
+                     placeholder="Add a comment…" required>
+              <button class="btn btn-outline" type="submit">💬 Post</button>
+            </form>
+          </div>
+          <!-- Comment list -->
+          {% if post.comments %}
+            <div class="mt-md">
+              <h6>Comments</h6>
+              {% for c in post.comments %}
+                <p class="mb-xs"><strong>{{ c.author }}:</strong> {{ c.text }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center text-muted">
+        No posts yet. <a href="{{ url_for('create_post') }}">Be the first to share.</a>
+      </p>
+    {% endfor %}
+  </div>
+{% endblock %}
